@@ -21,12 +21,26 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    ArrayList<DatasetUtils> list;
     private EditText mMovieSearchEditText;
     private Button mSearchButton;
     private RecyclerView mRecyclerView;
     private MovieDbAdapter mMovieDbAdapter;
     private TextView mErrorMessage;
     private ProgressBar mLoadingIndicator;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList("moviesList", mMovieDbAdapter.getMovieData());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        list = savedInstanceState.getParcelableArrayList("moviesList");
+        mMovieDbAdapter.setMovieData(list);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
