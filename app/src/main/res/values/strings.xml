@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Movies Database</string>
+    <string name="error_message">Unfortunately something went wrong, please try again later.</string>
+    <string name="search_hint">Type movie name and press Search.</string>
+    <string name="search_button">Search</string>
+
+    <string name="api_key">API KEY FROM OMDB</string>
+</resources>
