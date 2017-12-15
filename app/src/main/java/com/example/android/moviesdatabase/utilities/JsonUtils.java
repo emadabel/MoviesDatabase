@@ -46,4 +46,44 @@ public final class JsonUtils {
 
         return datasetList;
     }
+
+    public static DatasetUtils getMovieDataFromJson(String omdbJsonStr)
+        throws JSONException {
+
+        final String OMDB_TITLE = "Title";
+        final String OMDB_YEAR = "Year";
+        final String OMDB_RATED = "Rated";
+        final String OMDB_RUNTIME = "Runtime";
+        final String OMDB_GENRE = "Genre";
+        final String OMDB_DIRECTOR = "Director";
+        final String OMDB_WRITER = "Writer";
+        final String OMDB_ACTORS = "Actors";
+        final String OMDB_PLOT = "Plot";
+        final String OMDB_POSTER = "Poster";
+        final String OMDB_METASCORE = "Metascore";
+        final String OMDB_RATING = "imdbRating";
+        final String OMDB_VOTES = "imdbVotes";
+
+        DatasetUtils datasetItem;
+
+        JSONObject movieObject = new JSONObject(omdbJsonStr);
+        String title = movieObject.getString(OMDB_TITLE);
+        String year = movieObject.getString(OMDB_YEAR);
+        String rated = movieObject.getString(OMDB_RATED);
+        String runtime = movieObject.getString(OMDB_RUNTIME);
+        String genre = movieObject.getString(OMDB_GENRE);
+        String director = movieObject.getString(OMDB_DIRECTOR);
+        String writer = movieObject.getString(OMDB_WRITER);
+        String actors = movieObject.getString(OMDB_ACTORS);
+        String plot = movieObject.getString(OMDB_PLOT);
+        String poster = movieObject.getString(OMDB_POSTER);
+        String metascore = movieObject.getString(OMDB_METASCORE);
+        String rating = movieObject.getString(OMDB_RATING);
+        String votes = movieObject.getString(OMDB_VOTES);
+
+        datasetItem = new DatasetUtils(title, poster, year, rated, runtime,
+                genre, director, writer, actors, plot, metascore, rating, votes);
+
+        return datasetItem;
+    }
 }

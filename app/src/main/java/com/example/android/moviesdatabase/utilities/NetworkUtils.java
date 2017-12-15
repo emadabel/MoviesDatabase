@@ -22,6 +22,10 @@ public final class NetworkUtils {
     private static final String TAG = NetworkUtils.class.getSimpleName();
     private static final String OMDB_BASE_URL = "http://www.omdbapi.com/";
     private static final String format = "json";
+    private static final String poltShort = "short";
+    private static final String poltFull = "full";
+
+    public enum SearchType {BY_ID, BY_SEARCH};
 
     final static String BY_ID_PARAM = "i";
     final static String BY_TITLE_PARAM = "t";
@@ -31,14 +35,29 @@ public final class NetworkUtils {
     final static String FORMAT_PARAM = "r";
     final static String API_KEY = "apikey";
 
-    public static URL buildUrl(Context context, String movieQuery) {
+    public static URL buildUrl(Context context, String movieQuery, SearchType searchType) {
         String apiKey = context.getString(R.string.api_key);
+        Uri builtUri = null;
 
-        Uri builtUri = Uri.parse(OMDB_BASE_URL).buildUpon()
-                .appendQueryParameter(BY_SEARCH_PARAM, movieQuery)
-                .appendQueryParameter(FORMAT_PARAM, format)
-                .appendQueryParameter(API_KEY, apiKey)
-                .build();
+        switch (searchType) {
+            case BY_SEARCH:
+                builtUri = Uri.parse(OMDB_BASE_URL).buildUpon()
+                        .appendQueryParameter(BY_SEARCH_PARAM, movieQuery)
+                        .appendQueryParameter(FORMAT_PARAM, format)
+                        .appendQueryParameter(API_KEY, apiKey)
+                        .build();
+                break;
+            case BY_ID:
+                builtUri = Uri.parse(OMDB_BASE_URL).buildUpon()
+                        .appendQueryParameter(BY_ID_PARAM, movieQuery)
+                        .appendQueryParameter(PLOT_PARAM, poltShort)
+                        .appendQueryParameter(FORMAT_PARAM, format)
+                        .appendQueryParameter(API_KEY, apiKey)
+                        .build();
+                break;
+            default:
+                builtUri = null;
+        }
 
         URL url = null;
         try {

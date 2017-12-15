@@ -20,16 +20,45 @@ public class DatasetUtils implements Parcelable {
             return new DatasetUtils[size];
         }
     };
+
     private String title;
     private String poster;
     private String year;
     private String id;
+    private String rated;
+    private String runtime;
+    private String genre;
+    private String director;
+    private String writer;
+    private String actors;
+    private String plot;
+    private String metascore;
+    private String rating;
+    private String votes;
 
     public DatasetUtils(String movieTitle, String posterUrl, String year, String imdbId) {
         this.title = movieTitle;
         this.poster = posterUrl;
         this.year = year;
         this.id = imdbId;
+    }
+
+    public DatasetUtils(String title, String poster, String year, String rated, String runtime,
+                        String genre, String director, String writer, String actors, String plot,
+                        String metascore, String rating, String votes) {
+        this.title = title;
+        this.poster = poster;
+        this.year = year;
+        this.rated = rated;
+        this.runtime = runtime;
+        this.genre = genre;
+        this.director = director;
+        this.writer = writer;
+        this.actors = actors;
+        this.plot = plot;
+        this.metascore = metascore;
+        this.rating = rating;
+        this.votes = votes;
     }
 
     private DatasetUtils(Parcel in) {
@@ -53,6 +82,46 @@ public class DatasetUtils implements Parcelable {
 
     public String getImdbId() {
         return id;
+    }
+
+    public String getRated() {
+        return rated;
+    }
+
+    public String getRuntime() {
+        return runtime;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public String getActors() {
+        return actors;
+    }
+
+    public String getPlot() {
+        return plot;
+    }
+
+    public String getMetascore() {
+        return metascore;
+    }
+
+    public String getImdbRating() {
+        return rating;
+    }
+
+    public String getImdbVotes() {
+        return votes;
     }
 
     @Override

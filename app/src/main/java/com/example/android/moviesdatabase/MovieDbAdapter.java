@@ -22,8 +22,14 @@ public class MovieDbAdapter extends RecyclerView.Adapter<MovieDbAdapter.MovieVie
     private ArrayList<DatasetUtils> mMovieData;
     private Context context;
 
-    public MovieDbAdapter() {
+    private final MovieDbAdapterOnClickHandler mClickHandler;
 
+    public interface MovieDbAdapterOnClickHandler {
+        void onClick(String movieId);
+    }
+
+    public MovieDbAdapter(MovieDbAdapterOnClickHandler clickHandler) {
+        mClickHandler = clickHandler;
     }
 
     @Override
@@ -64,7 +70,7 @@ public class MovieDbAdapter extends RecyclerView.Adapter<MovieDbAdapter.MovieVie
         notifyDataSetChanged();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final ImageView mMoviePosterImageView;
         public final TextView mMovieNameTextView;
@@ -74,6 +80,15 @@ public class MovieDbAdapter extends RecyclerView.Adapter<MovieDbAdapter.MovieVie
 
             mMoviePosterImageView = (ImageView) itemView.findViewById(R.id.iv_movie_poster);
             mMovieNameTextView = (TextView) itemView.findViewById(R.id.tv_movie_name);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int adapterPosition = getAdapterPosition();
+            String movieId = mMovieData.get(adapterPosition).getImdbId();
+            mClickHandler.onClick(movieId);
         }
     }
 }

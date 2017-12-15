@@ -1,5 +1,6 @@
 package com.example.android.moviesdatabase;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,7 @@ import com.example.android.moviesdatabase.utilities.NetworkUtils;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieDbAdapter.MovieDbAdapterOnClickHandler {
 
     ArrayList<DatasetUtils> list;
     private EditText mMovieSearchEditText;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         mErrorMessage = (TextView) findViewById(R.id.tv_error_message);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
-        mMovieDbAdapter = new MovieDbAdapter();
+        mMovieDbAdapter = new MovieDbAdapter(this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
@@ -90,6 +91,13 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setVisibility(View.INVISIBLE);
     }
 
+    @Override
+    public void onClick(String movieId) {
+        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+        intent.putExtra("EXTRA_MOVIE_ID", movieId);
+        startActivity(intent);
+    }
+
     public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<DatasetUtils>> {
 
         @Override
@@ -106,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             String query = strings[0];
-            URL movieSearchUrl = NetworkUtils.buildUrl(MainActivity.this, query);
+            URL movieSearchUrl = NetworkUtils.buildUrl(MainActivity.this, query, NetworkUtils.SearchType.BY_SEARCH);
 
             try {
                 String jsonOmdbResponse = NetworkUtils
