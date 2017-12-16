@@ -11,6 +11,6 @@
     <string name="rating_of_ten">/10</string>
 
     <string name="metascore">Metascore</string>
-
+    
     <string name="api_key">API KEY FROM OMDB</string>
 </resources>
