@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="line">#cacaca</color>
+    <color name="defaultBackground">#ececec</color>
+    <color name="metascoreBackground">#0c0</color>
 </resources>

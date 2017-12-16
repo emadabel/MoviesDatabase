@@ -10,14 +10,12 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="@dimen/activity_vertical_margin">
 
         <ImageView
             android:id="@+id/iv_movie_poster"
-            android:layout_width="40dp"
-            android:layout_height="55dp"
-            android:layout_marginRight="8dp"
-            android:scaleType="fitCenter"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            style="@style/SmallPosterThumbnail"
             tools:src="@mipmap/ic_launcher" />
 
         <TextView
@@ -25,13 +23,8 @@
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="dummy text" />
+            tools:text="@string/dummy_text" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="#dadada" />
+    <View style="@style/LineApperance" />
 </LinearLayout>

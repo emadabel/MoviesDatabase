@@ -8,4 +8,42 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SmallPosterThumbnail">
+        <item name="android:layout_width">@dimen/small_poster_width</item>
+        <item name="android:layout_height">@dimen/small_poster_height</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="NormalPosterThumbnail">
+        <item name="android:layout_width">@dimen/normal_poster_width</item>
+        <item name="android:layout_height">@dimen/normal_poster_height</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="ProgressApperance">
+        <item name="android:layout_width">@dimen/progressbar_dimens</item>
+        <item name="android:layout_height">@dimen/progressbar_dimens</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="LineApperance">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/line_height</item>
+        <item name="android:background">@color/line</item>
+    </style>
+
+    <style name="RatingStar">
+        <item name="android:layout_width">@dimen/rating_star</item>
+        <item name="android:layout_height">@dimen/rating_star</item>
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/small_margin</item>
+        <item name="android:src">@drawable/ic_imdb_rating</item>
+    </style>
+
+    <style name="MetaScoreApperance">
+        <item name="android:background">@color/metascoreBackground</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>

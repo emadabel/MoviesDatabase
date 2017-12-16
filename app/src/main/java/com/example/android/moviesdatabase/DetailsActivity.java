@@ -3,7 +3,9 @@ package com.example.android.moviesdatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.android.moviesdatabase.utilities.DatasetUtils;
@@ -30,6 +32,9 @@ public class DetailsActivity extends AppCompatActivity {
 
     private ImageView mMoviePic;
 
+    private ProgressBar mLoadingProgressBar;
+    private View mDetailsContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +53,20 @@ public class DetailsActivity extends AppCompatActivity {
 
         mMoviePic = (ImageView) findViewById(R.id.iv_movie_pic);
 
+        mLoadingProgressBar = (ProgressBar) findViewById(R.id.pb_loading_details);
+        mDetailsContainer = findViewById(R.id.details_container);
+
         new FetchMovieData().execute(extraMovieId);
     }
 
     public class FetchMovieData extends AsyncTask<String, Void, DatasetUtils> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoadingProgressBar.setVisibility(View.VISIBLE);
+            mDetailsContainer.setVisibility(View.INVISIBLE);
+        }
 
         @Override
         protected DatasetUtils doInBackground(String... strings) {
@@ -94,6 +109,8 @@ public class DetailsActivity extends AppCompatActivity {
                 Picasso.with(DetailsActivity.this).load(movieData.getMoviePoster())
                         .into(mMoviePic);
             }
+            mLoadingProgressBar.setVisibility(View.INVISIBLE);
+            mDetailsContainer.setVisibility(View.VISIBLE);
         }
     }
 }
