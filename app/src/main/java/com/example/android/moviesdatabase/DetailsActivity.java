@@ -107,6 +107,8 @@ public class DetailsActivity extends AppCompatActivity {
                 mMovieCastTextView.setText("Director: " + movieData.getDirector() + "\n" + "Writers: " + movieData.getWriter() + "\n" + "Actors: " + movieData.getActors());
 
                 Picasso.with(DetailsActivity.this).load(movieData.getMoviePoster())
+                        .placeholder(R.drawable.placeholder)
+                        .error(R.drawable.error)
                         .into(mMoviePic);
             }
             mLoadingProgressBar.setVisibility(View.INVISIBLE);

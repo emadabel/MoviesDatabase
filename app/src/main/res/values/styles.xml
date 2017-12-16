@@ -11,7 +11,7 @@
     <style name="SmallPosterThumbnail">
         <item name="android:layout_width">@dimen/small_poster_width</item>
         <item name="android:layout_height">@dimen/small_poster_height</item>
-        <item name="android:scaleType">fitCenter</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
     <style name="NormalPosterThumbnail">

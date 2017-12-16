@@ -52,6 +52,8 @@ public class MovieDbAdapter extends RecyclerView.Adapter<MovieDbAdapter.MovieVie
         movieViewHolder.mMovieNameTextView.setText(movieName + " (" + movieYear + ")");
 
         Picasso.with(context).load(moviePoster)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.error)
                 .into(movieViewHolder.mMoviePosterImageView);
     }
 

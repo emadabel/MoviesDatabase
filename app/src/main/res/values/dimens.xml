@@ -4,7 +4,7 @@
     <dimen name="small_margin">4dp</dimen>
     <dimen name="activity_horizontal_margin">8dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="small_poster_width">75dp</dimen>
+    <dimen name="small_poster_width">80dp</dimen>
     <dimen name="small_poster_height">100dp</dimen>
     <dimen name="normal_poster_width">100dp</dimen>
     <dimen name="normal_poster_height">140dp</dimen>
