@@ -4,5 +4,12 @@
     <string name="search_hint">Type movie name and press Search.</string>
     <string name="search_button">Search</string>
 
+    <string name="dummy_text">$$$$$$$$$</string>
+    <string name="dummy_number">##</string>
+
+    <string name="rating_of_ten">/10</string>
+
+    <string name="metascore">Metascore</string>
+    
     <string name="api_key">API KEY FROM OMDB</string>
 </resources>
