@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements MovieDbAdapter.Mo
 
         mMovieDbAdapter = new MovieDbAdapter(this);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
 
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);

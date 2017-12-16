@@ -11,13 +11,13 @@
     <style name="SmallPosterThumbnail">
         <item name="android:layout_width">@dimen/small_poster_width</item>
         <item name="android:layout_height">@dimen/small_poster_height</item>
-        <item name="android:scaleType">centerCrop</item>
+        <item name="android:scaleType">fitXY</item>
     </style>
 
     <style name="NormalPosterThumbnail">
         <item name="android:layout_width">@dimen/normal_poster_width</item>
         <item name="android:layout_height">@dimen/normal_poster_height</item>
-        <item name="android:scaleType">fitCenter</item>
+        <item name="android:scaleType">fitXY</item>
     </style>
 
     <style name="ProgressApperance">

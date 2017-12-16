@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.android.moviesdatabase.utilities.DatasetUtils;
 import com.squareup.picasso.Picasso;
@@ -45,11 +44,11 @@ public class MovieDbAdapter extends RecyclerView.Adapter<MovieDbAdapter.MovieVie
     @Override
     public void onBindViewHolder(MovieViewHolder movieViewHolder, int position) {
 
-        String movieName = mMovieData.get(position).getMovieTitle();
-        String movieYear = mMovieData.get(position).getYear();
+        //String movieName = mMovieData.get(position).getMovieTitle();
+        //String movieYear = mMovieData.get(position).getYear();
         String moviePoster = mMovieData.get(position).getMoviePoster();
 
-        movieViewHolder.mMovieNameTextView.setText(movieName + " (" + movieYear + ")");
+        //movieViewHolder.mMovieNameTextView.setText(movieName + " (" + movieYear + ")");
 
         Picasso.with(context).load(moviePoster)
                 .placeholder(R.drawable.placeholder)
@@ -75,13 +74,13 @@ public class MovieDbAdapter extends RecyclerView.Adapter<MovieDbAdapter.MovieVie
     public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final ImageView mMoviePosterImageView;
-        public final TextView mMovieNameTextView;
+        //public final TextView mMovieNameTextView;
 
         public MovieViewHolder(View itemView) {
             super(itemView);
 
             mMoviePosterImageView = (ImageView) itemView.findViewById(R.id.iv_movie_poster);
-            mMovieNameTextView = (TextView) itemView.findViewById(R.id.tv_movie_name);
+            //mMovieNameTextView = (TextView) itemView.findViewById(R.id.tv_movie_name);
 
             itemView.setOnClickListener(this);
         }
