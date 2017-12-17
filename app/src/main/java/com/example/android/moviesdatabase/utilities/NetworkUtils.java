@@ -22,8 +22,8 @@ public final class NetworkUtils {
     private static final String TAG = NetworkUtils.class.getSimpleName();
     private static final String OMDB_BASE_URL = "http://www.omdbapi.com/";
     private static final String format = "json";
-    private static final String poltShort = "short";
-    private static final String poltFull = "full";
+    private static final String plotShort = "short";
+    private static final String plotFull = "full";
 
     public enum SearchType {BY_ID, BY_SEARCH};
 
@@ -50,7 +50,7 @@ public final class NetworkUtils {
             case BY_ID:
                 builtUri = Uri.parse(OMDB_BASE_URL).buildUpon()
                         .appendQueryParameter(BY_ID_PARAM, movieQuery)
-                        .appendQueryParameter(PLOT_PARAM, poltShort)
+                        .appendQueryParameter(PLOT_PARAM, plotShort)
                         .appendQueryParameter(FORMAT_PARAM, format)
                         .appendQueryParameter(API_KEY, apiKey)
                         .build();

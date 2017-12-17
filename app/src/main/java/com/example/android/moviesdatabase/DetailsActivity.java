@@ -45,7 +45,7 @@ public class DetailsActivity extends AppCompatActivity {
         mMovieTitleTextView = (TextView) findViewById(R.id.tv_movie_title);
         mReleaseYearTextView = (TextView) findViewById(R.id.tv_movie_year);
         mMovieInfoTextView = (TextView) findViewById(R.id.tv_movie_info);
-        mPlotTextView = (TextView) findViewById(R.id.tv_polt);
+        mPlotTextView = (TextView) findViewById(R.id.tv_plot);
         mImdbRatingTextView = (TextView) findViewById(R.id.tv_imdb_rating);
         mImdbVotesTextView = (TextView) findViewById(R.id.tv_imdb_votes);
         mMetascoreTextView = (TextView) findViewById(R.id.tv_metascore);
