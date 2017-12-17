@@ -41,7 +41,7 @@
     </style>
 
     <style name="MetaScoreApperance">
-        <item name="android:background">@color/metascoreBackground</item>
+        <item name="android:background">@color/metaNoScore</item>
         <item name="android:padding">4dp</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:textColor">@android:color/white</item>

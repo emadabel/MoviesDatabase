@@ -1,7 +1,9 @@
 package com.example.android.moviesdatabase;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -59,6 +61,24 @@ public class DetailsActivity extends AppCompatActivity {
         new FetchMovieData().execute(extraMovieId);
     }
 
+    public int getMetaBgColor(Context context, String metascore) {
+
+        if (metascore.isEmpty() || metascore.equalsIgnoreCase("N/A")) {
+            return ContextCompat.getColor(context, R.color.metaNoScore);
+        }
+
+        int score = Integer.valueOf(metascore);
+        if (score <= 39) {
+            return ContextCompat.getColor(context, R.color.meta0to3Score);
+        } else if (score <= 60 && score >= 40) {
+            return ContextCompat.getColor(context, R.color.meta4to6Score);
+        } else if (score >= 61) {
+            return ContextCompat.getColor(context, R.color.meta7to10Score);
+        } else {
+            return ContextCompat.getColor(context, R.color.metaNoScore);
+        }
+    }
+
     public class FetchMovieData extends AsyncTask<String, Void, DatasetUtils> {
 
         @Override
@@ -82,10 +102,7 @@ public class DetailsActivity extends AppCompatActivity {
                 String jsonOmdbResponse = NetworkUtils
                         .getResponseFromHttpUrl(movieSearchUrl);
 
-                DatasetUtils moviesObject = JsonUtils
-                        .getMovieDataFromJson(jsonOmdbResponse);
-
-                return moviesObject;
+                return JsonUtils.getMovieDataFromJson(jsonOmdbResponse);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -103,8 +120,13 @@ public class DetailsActivity extends AppCompatActivity {
                 mPlotTextView.setText(movieData.getPlot());
                 mImdbRatingTextView.setText(movieData.getImdbRating());
                 mImdbVotesTextView.setText(movieData.getImdbVotes());
-                mMetascoreTextView.setText(movieData.getMetascore());
                 mMovieCastTextView.setText("Director: " + movieData.getDirector() + "\n" + "Writers: " + movieData.getWriter() + "\n" + "Actors: " + movieData.getActors());
+
+                String metascore = movieData.getMetascore();
+                int bgColorForMetascore = getMetaBgColor(DetailsActivity.this, metascore);
+
+                mMetascoreTextView.setText(metascore);
+                mMetascoreTextView.setBackgroundColor(bgColorForMetascore);
 
                 Picasso.with(DetailsActivity.this).load(movieData.getMoviePoster())
                         .placeholder(R.drawable.placeholder)

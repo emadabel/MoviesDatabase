@@ -5,5 +5,10 @@
     <color name="colorAccent">#FF4081</color>
     <color name="line">#cacaca</color>
     <color name="defaultBackground">#ececec</color>
-    <color name="metascoreBackground">#0c0</color>
+
+    <color name="metaNoScore">#bbb</color>
+    <color name="meta0to3Score">#f00</color>
+    <color name="meta4to6Score">#fc3</color>
+    <color name="meta7to10Score">#6c3</color>
+
 </resources>

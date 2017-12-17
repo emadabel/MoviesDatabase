@@ -120,10 +120,7 @@ public class MainActivity extends AppCompatActivity implements MovieDbAdapter.Mo
                 String jsonOmdbResponse = NetworkUtils
                         .getResponseFromHttpUrl(movieSearchUrl);
 
-                ArrayList<DatasetUtils> moviesList = JsonUtils
-                        .getOmdbDataFromJson(jsonOmdbResponse);
-
-                return moviesList;
+                return JsonUtils.getOmdbDataFromJson(jsonOmdbResponse);
 
             } catch (Exception e) {
                 e.printStackTrace();
