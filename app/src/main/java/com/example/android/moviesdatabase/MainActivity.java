@@ -8,10 +8,11 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.android.moviesdatabase.utilities.DatasetUtils;
 import com.example.android.moviesdatabase.utilities.JsonUtils;
 import com.example.android.moviesdatabase.utilities.NetworkUtils;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,8 +32,7 @@ public class MainActivity extends AppCompatActivity implements
     private static final String SEARCH_QUERY_EXTRA = "query";
     private static final int MOVIES_LOADER_ID = 11;
     ArrayList<DatasetUtils> list;
-    private EditText mMovieSearchEditText;
-    private Button mSearchButton;
+    private MaterialSearchView searchView;
     private RecyclerView mRecyclerView;
     private MovieDbAdapter mMovieDbAdapter;
     private TextView mErrorMessage;
@@ -55,8 +56,9 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mMovieSearchEditText = (EditText) findViewById(R.id.et_movie_search);
-        mSearchButton = (Button) findViewById(R.id.button_search);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_movie_data);
         mErrorMessage = (TextView) findViewById(R.id.tv_error_message);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
@@ -73,17 +75,58 @@ public class MainActivity extends AppCompatActivity implements
 
         getSupportLoaderManager().initLoader(MOVIES_LOADER_ID, null, callback);
 
-        mSearchButton.setOnClickListener(new View.OnClickListener() {
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setVoiceSearch(false);
+        searchView.setCursorDrawable(R.drawable.custom_cursor);
+        searchView.setEllipsize(true);
+        //searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View view) {
-                loadMovieData();
+            public boolean onQueryTextSubmit(String query) {
+                loadMovieData(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Do some magic
+                return false;
+            }
+        });
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                //Do some magic
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                //Do some magic
             }
         });
     }
 
-    private void loadMovieData() {
-        String query = mMovieSearchEditText.getText().toString();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void loadMovieData(String query) {
         if (TextUtils.isEmpty(query)) {
             Toast.makeText(MainActivity.this, "Please type something to search", Toast.LENGTH_SHORT).show();
             return;

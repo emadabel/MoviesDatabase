@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.android.moviesdatabase.R;
+import com.example.android.moviesdatabase.BuildConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,24 +19,22 @@ import java.util.Scanner;
 
 public final class NetworkUtils {
 
-    private static final String TAG = NetworkUtils.class.getSimpleName();
-    private static final String OMDB_BASE_URL = "http://www.omdbapi.com/";
-    private static final String format = "json";
-    private static final String plotShort = "short";
-    private static final String plotFull = "full";
-
-    public enum SearchType {BY_ID, BY_SEARCH};
-
     final static String BY_ID_PARAM = "i";
     final static String BY_TITLE_PARAM = "t";
     final static String BY_SEARCH_PARAM = "s";
     final static String RELEASE_YEAR_PARAM = "y";
     final static String PLOT_PARAM = "plot";
     final static String FORMAT_PARAM = "r";
+
     final static String API_KEY = "apikey";
+    private static final String TAG = NetworkUtils.class.getSimpleName();
+    private static final String OMDB_BASE_URL = "http://www.omdbapi.com/";
+    private static final String format = "json";
+    private static final String plotShort = "short";
+    private static final String plotFull = "full";
 
     public static URL buildUrl(Context context, String movieQuery, SearchType searchType) {
-        String apiKey = context.getString(R.string.api_key);
+        String apiKey = BuildConfig.OMDB_API_KEY;
         Uri builtUri = null;
 
         switch (searchType) {
@@ -89,4 +87,6 @@ public final class NetworkUtils {
             urlConnection.disconnect();
         }
     }
+
+    public enum SearchType {BY_ID, BY_SEARCH}
 }

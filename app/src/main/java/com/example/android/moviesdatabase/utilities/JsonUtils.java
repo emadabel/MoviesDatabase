@@ -48,7 +48,7 @@ public final class JsonUtils {
     }
 
     public static DatasetUtils getMovieDataFromJson(String omdbJsonStr)
-        throws JSONException {
+            throws JSONException {
 
         final String OMDB_TITLE = "Title";
         final String OMDB_YEAR = "Year";

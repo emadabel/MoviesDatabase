@@ -18,14 +18,9 @@ import java.util.ArrayList;
 
 public class MovieDbAdapter extends RecyclerView.Adapter<MovieDbAdapter.MovieViewHolder> {
 
+    private final MovieDbAdapterOnClickHandler mClickHandler;
     private ArrayList<DatasetUtils> mMovieData;
     private Context context;
-
-    private final MovieDbAdapterOnClickHandler mClickHandler;
-
-    public interface MovieDbAdapterOnClickHandler {
-        void onClick(String movieId);
-    }
 
     public MovieDbAdapter(MovieDbAdapterOnClickHandler clickHandler) {
         mClickHandler = clickHandler;
@@ -58,7 +53,7 @@ public class MovieDbAdapter extends RecyclerView.Adapter<MovieDbAdapter.MovieVie
 
     @Override
     public int getItemCount() {
-        if (mMovieData == null)return 0;
+        if (mMovieData == null) return 0;
         return mMovieData.size();
     }
 
@@ -69,6 +64,10 @@ public class MovieDbAdapter extends RecyclerView.Adapter<MovieDbAdapter.MovieVie
     public void setMovieData(ArrayList<DatasetUtils> movieData) {
         mMovieData = movieData;
         notifyDataSetChanged();
+    }
+
+    public interface MovieDbAdapterOnClickHandler {
+        void onClick(String movieId);
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

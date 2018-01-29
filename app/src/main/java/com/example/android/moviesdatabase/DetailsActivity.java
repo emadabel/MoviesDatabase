@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -42,6 +44,14 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         String extraMovieId = getIntent().getStringExtra("EXTRA_MOVIE_ID");
 
         mMovieTitleTextView = (TextView) findViewById(R.id.tv_movie_title);
@@ -77,6 +87,21 @@ public class DetailsActivity extends AppCompatActivity {
         } else {
             return ContextCompat.getColor(context, R.color.metaNoScore);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home)
+            finish();
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public class FetchMovieData extends AsyncTask<String, Void, DatasetUtils> {
@@ -116,7 +141,7 @@ public class DetailsActivity extends AppCompatActivity {
                 mMovieTitleTextView.setText(movieData.getMovieTitle());
                 mReleaseYearTextView.setText("(" + movieData.getYear() + ")");
                 mMovieInfoTextView.setText(movieData.getRated() + " | " + movieData.getRuntime() + " | " +
-                movieData.getGenre());
+                        movieData.getGenre());
                 mPlotTextView.setText(movieData.getPlot());
                 mImdbRatingTextView.setText(movieData.getImdbRating());
                 mImdbVotesTextView.setText(movieData.getImdbVotes());
