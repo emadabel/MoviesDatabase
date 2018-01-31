@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.android.moviesdatabase.utilities.DatasetUtils;
+import com.example.android.moviesdatabase.omdbapi.OmdbMovies;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Emad on 12/12/2017.
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class MovieDbAdapter extends RecyclerView.Adapter<MovieDbAdapter.MovieViewHolder> {
 
     private final MovieDbAdapterOnClickHandler mClickHandler;
-    private ArrayList<DatasetUtils> mMovieData;
+    private List<OmdbMovies> mMovieData;
     private Context context;
 
     public MovieDbAdapter(MovieDbAdapterOnClickHandler clickHandler) {
@@ -40,8 +40,8 @@ public class MovieDbAdapter extends RecyclerView.Adapter<MovieDbAdapter.MovieVie
     public void onBindViewHolder(MovieViewHolder movieViewHolder, int position) {
 
         //String movieName = mMovieData.get(position).getMovieTitle();
-        //String movieYear = mMovieData.get(position).getYear();
-        String moviePoster = mMovieData.get(position).getMoviePoster();
+        //String movieYear = mMovieData.get(position).getReleaseYear();
+        String moviePoster = mMovieData.get(position).getPoster();
 
         //movieViewHolder.mMovieNameTextView.setText(movieName + " (" + movieYear + ")");
 
@@ -57,11 +57,11 @@ public class MovieDbAdapter extends RecyclerView.Adapter<MovieDbAdapter.MovieVie
         return mMovieData.size();
     }
 
-    public ArrayList<DatasetUtils> getMovieData() {
+    public List<OmdbMovies> getMovieData() {
         return mMovieData;
     }
 
-    public void setMovieData(ArrayList<DatasetUtils> movieData) {
+    public void setMovieData(List<OmdbMovies> movieData) {
         mMovieData = movieData;
         notifyDataSetChanged();
     }

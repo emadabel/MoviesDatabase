@@ -17,21 +17,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.moviesdatabase.utilities.DatasetUtils;
-import com.example.android.moviesdatabase.utilities.JsonUtils;
-import com.example.android.moviesdatabase.utilities.NetworkUtils;
+import com.example.android.moviesdatabase.omdbapi.OmdbApi;
+import com.example.android.moviesdatabase.omdbapi.SearchResults;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
-import java.net.URL;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements
         MovieDbAdapter.MovieDbAdapterOnClickHandler,
-        LoaderManager.LoaderCallbacks<ArrayList<DatasetUtils>> {
+        LoaderManager.LoaderCallbacks<SearchResults> {
 
     private static final String SEARCH_QUERY_EXTRA = "query";
     private static final int MOVIES_LOADER_ID = 11;
-    ArrayList<DatasetUtils> list;
+    static OmdbApi omdbApi;
     private MaterialSearchView searchView;
     private RecyclerView mRecyclerView;
     private MovieDbAdapter mMovieDbAdapter;
@@ -40,15 +36,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList("moviesList", mMovieDbAdapter.getMovieData());
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        list = savedInstanceState.getParcelableArrayList("moviesList");
-        mMovieDbAdapter.setMovieData(list);
     }
 
     @Override
@@ -58,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        String apiKey = BuildConfig.OMDB_API_KEY;
+        omdbApi = new OmdbApi(apiKey);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_movie_data);
         mErrorMessage = (TextView) findViewById(R.id.tv_error_message);
@@ -71,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mMovieDbAdapter);
 
-        LoaderManager.LoaderCallbacks<ArrayList<DatasetUtils>> callback = MainActivity.this;
+        LoaderManager.LoaderCallbacks<SearchResults> callback = MainActivity.this;
 
         getSupportLoaderManager().initLoader(MOVIES_LOADER_ID, null, callback);
 
@@ -136,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements
         queryBundle.putString(SEARCH_QUERY_EXTRA, query);
 
         LoaderManager loaderManager = getSupportLoaderManager();
-        Loader<ArrayList<DatasetUtils>> moviesSearchLoader = loaderManager.getLoader(MOVIES_LOADER_ID);
+        Loader<SearchResults> moviesSearchLoader = loaderManager.getLoader(MOVIES_LOADER_ID);
         if (moviesSearchLoader == null) {
             loaderManager.initLoader(MOVIES_LOADER_ID, queryBundle, this);
         } else {
@@ -162,10 +158,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public Loader<ArrayList<DatasetUtils>> onCreateLoader(int id, final Bundle args) {
-        return new AsyncTaskLoader<ArrayList<DatasetUtils>>(this) {
+    public Loader<SearchResults> onCreateLoader(int id, final Bundle args) {
+        return new AsyncTaskLoader<SearchResults>(this) {
 
-            ArrayList<DatasetUtils> mMoviesData = null;
+            SearchResults mMoviesData = null;
 
             @Override
             protected void onStartLoading() {
@@ -182,20 +178,15 @@ public class MainActivity extends AppCompatActivity implements
             }
 
             @Override
-            public ArrayList<DatasetUtils> loadInBackground() {
+            public SearchResults loadInBackground() {
                 String query = args.getString(SEARCH_QUERY_EXTRA);
 
                 if (query == null || TextUtils.isEmpty(query)) {
                     return null;
                 }
 
-                URL movieSearchUrl = NetworkUtils.buildUrl(MainActivity.this, query, NetworkUtils.SearchType.BY_SEARCH);
-
                 try {
-                    String jsonOmdbResponse = NetworkUtils
-                            .getResponseFromHttpUrl(movieSearchUrl);
-
-                    return JsonUtils.getOmdbDataFromJson(jsonOmdbResponse);
+                    return omdbApi.getMovies(query);
                 } catch (Exception e) {
                     e.printStackTrace();
                     return null;
@@ -203,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements
             }
 
             @Override
-            public void deliverResult(ArrayList<DatasetUtils> moviesData) {
+            public void deliverResult(SearchResults moviesData) {
                 mMoviesData = moviesData;
                 super.deliverResult(moviesData);
             }
@@ -211,19 +202,19 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<DatasetUtils>> loader, ArrayList<DatasetUtils> moviesData) {
+    public void onLoadFinished(Loader<SearchResults> loader, SearchResults moviesData) {
         mLoadingIndicator.setVisibility(View.INVISIBLE);
 
         if (moviesData == null) {
             showErrorMessage();
         } else {
             showMovieDataView();
-            mMovieDbAdapter.setMovieData(moviesData);
+            mMovieDbAdapter.setMovieData(moviesData.getMovies());
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<DatasetUtils>> loader) {
+    public void onLoaderReset(Loader<SearchResults> loader) {
 
     }
 }
