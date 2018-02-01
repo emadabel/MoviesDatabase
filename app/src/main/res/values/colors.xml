@@ -7,7 +7,7 @@
     <color name="secondaryLightColor">#4f5b62</color>
     <color name="secondaryDarkColor">#000a12</color>
     <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#E0E0E0</color>
     <color name="accentColor">#e0e0e0</color>
     <color name="background_dark">@color/background_material_dark</color>
 

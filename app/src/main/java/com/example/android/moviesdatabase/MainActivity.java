@@ -2,6 +2,7 @@ package com.example.android.moviesdatabase;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -17,9 +18,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.moviesdatabase.omdbapi.OmdbApi;
-import com.example.android.moviesdatabase.omdbapi.SearchResults;
+import com.emadabel.openmoviesdbapilibrary.OmdbApi;
+import com.emadabel.openmoviesdbapilibrary.SearchResults;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements
         MovieDbAdapter.MovieDbAdapterOnClickHandler,
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements
         getSupportLoaderManager().initLoader(MOVIES_LOADER_ID, null, callback);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
-        searchView.setVoiceSearch(false);
+        searchView.setVoiceSearch(true);
         searchView.setCursorDrawable(R.drawable.custom_cursor);
         searchView.setEllipsize(true);
         //searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
@@ -101,6 +104,22 @@ public class MainActivity extends AppCompatActivity implements
                 //Do some magic
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MaterialSearchView.REQUEST_VOICE && resultCode == RESULT_OK) {
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (matches != null && matches.size() > 0) {
+                String searchWrd = matches.get(0);
+                if (!TextUtils.isEmpty(searchWrd)) {
+                    searchView.setQuery(searchWrd, true);
+                }
+            }
+
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
