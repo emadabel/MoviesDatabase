@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.android.moviesdatabase.omdbapi.MovieDb;
+import com.emadabel.openmoviesdbapilibrary.MovieDb;
 import com.squareup.picasso.Picasso;
 
 import static com.example.android.moviesdatabase.MainActivity.omdbApi;
